@@ -30,13 +30,12 @@ export class RegisterComponent implements OnInit {
           this.status = 'success';
         }else{
           this.status = 'fail';
+          setTimeout(() => {
+            this.status = '';
+          }, 5000);
         }
 
         form.reset();
-
-        setTimeout(() => {
-          this.status = '';
-        }, 2000);
       },
       error => {
         this.status = 'fail';
@@ -51,7 +50,7 @@ export class RegisterComponent implements OnInit {
 
         setTimeout(() => {
           this.status = '';
-        }, 3000);
+        }, 5000);
       }
     );
   }

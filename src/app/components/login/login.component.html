@@ -1,21 +1,37 @@
 <div class="container">
     <br>
     <h1 class="center">{{ page_title }}</h1>
-    <form>
+    <div *ngIf="status == 'fail'" class="alert alert-danger" role="alert">
+        El usuario o contraseña es incorrecto.
+    </div>
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
         <div class="form-group">
             <label for="email">Email</label>
             <input type="email" name="email" class="form-control" aria-describedby="emailHelp"
-                placeholder="Introduce tu email">
+                placeholder="Introduce tu email" #email="ngModel" [(ngModel)]="user.email"
+                required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" minlength="5"
+                [ngClass]="{ 'is-invalid' : email.invalid && email.touched || status == 'fail',
+                'is-valid' : email.valid && email.touched }">
+            <small *ngIf="!email.valid && email.touched" class="invalid-feedback d-block">
+                El email no es valido.
+            </small>
         </div>
+
         <div class="form-group">
             <label for="password">Contraseña</label>
-            <input type="password" class="form-control" name="password" placeholder="Introduce tu contraseña">
+            <input type="password" class="form-control" name="password" minlength='8'
+            placeholder="Introduce tu contraseña" #password="ngModel" [(ngModel)]="user.password" required
+            [ngClass]="{ 'is-invalid' : password.invalid && password.touched || status == 'fail',
+                'is-valid' : password.valid && password.touched }">
+            <small *ngIf="!password.valid && password.touched" class="invalid-feedback d-block">
+                La contraseña no es valida, debe contener al menos 8 caracteres.
+            </small>
         </div>
         <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <input type="checkbox" class="form-check-input">
             <label class="form-check-label" for="exampleCheck1">Recuerdame</label>
         </div>
         <br>
-        <button type="submit" class="btn btn-dark">Iniciar</button>
+        <button type="submit" class="btn btn-dark" [disabled]="loginForm.invalid">Iniciar</button>
     </form>
 </div>
