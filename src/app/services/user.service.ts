@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { global } from './global';
-import { User } from '../models/user';
 
 @Injectable()
 export class UserService{
@@ -37,6 +36,15 @@ export class UserService{
         return this._http.post(this.url+'user/login', params, { headers: headers });
     }
 
+    update(token, user){
+        let json = JSON.stringify(user);
+        let params = 'json='+json;
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+            .set('Authorization', token);
+
+        return this._http.put(this.url+'user/update', params, { headers: headers });
+    }
+
     getIdentity(){
         let identity = JSON.parse(localStorage.getItem('user'));
 
@@ -59,5 +67,9 @@ export class UserService{
         }
 
         return this.token;
+    }
+
+    getImage(filename){
+        return this._http.get(this.url+'user/avatar/'+filename);
     }
 }

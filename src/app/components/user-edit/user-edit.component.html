@@ -1,8 +1,8 @@
 <div class="container ">
     
-    <h1 class="mt-4 mb-2">Registrate para crear entradas y mucho m&aacute;s!</h1>
+    <h1 class="mt-4 mb-2">Actualiza tus datos</h1>
 
-    <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
+    <form #userEditForm="ngForm" (ngSubmit)="onSubmit(userEditForm)">
         <div class="form-group">
             <label for="name">Nombre(s)</label>
             <input type="text" class="form-control"
@@ -42,30 +42,39 @@
             </small>
         </div>
 
-        <div class="form-group">
-            <label for="password">Contraseña</label>
-            <input type="password" class="form-control" name="password" minlength='8'
-            placeholder="Introduce tu contraseña" #password="ngModel" [(ngModel)]="user.password" required
-            [ngClass]="{ 'is-invalid' : password.invalid && password.touched,
-                'is-valid' : password.valid && password.touched }">
-            <small *ngIf="!password.valid && password.touched" class="invalid-feedback d-block">
-                La contraseña no es valida, debe contener al menos 8 caracteres.
-            </small>
+        <div class="mb-3">
+            <label for="description" class="form-label">Sobre m&iacute;</label>
+            <textarea froalaEditor="froala_options" class="form-control" name="description"
+            rows="3" #description="ngModel" [(ngModel)]="user.description">{{ user.description }}</textarea>
+        </div>
+
+        <div class="mb-3 text-center">
+            <label for="formFile" class="form-label">Im&aacute;gen de perfil</label>
+            <angular-file-uploader
+                [config]="afuConfig"
+                [resetUpload]=resetVar
+                (ApiResponse)="avatarUpload($event)">
+            </angular-file-uploader>
+        </div>
+
+        <div *ngIf="identity &&identity.image" class="container mb-3 text-center">
+            <img src="{{ url+'avatar/'+user.image }}" alt="Avatar" class="img-fluid img-rounded"/>
         </div>
 
         <div *ngIf="status == 'success'" class="alert alert-success" role="alert">
-            El usuario se ha creado correctamente!
-            <a [routerLink]="['/login']" class="alert-link">Inicia sesi&oacute;n</a>
+            El usuario se ha actualizado correctamente!
+            <a [routerLink]="['/perfil']" class="alert-link">Regresa a tu perfil</a>
         </div>
 
         <div *ngIf="status == 'fail'" class="alert alert-danger" role="alert">
-            No se ha podido crear el usuario.
+            No se ha podido actualizar el usuario.
         </div>
 
-        <button type="submit" class="btn btn-dark" [disabled]="registerForm.invalid">Registrarme</button>
+        <button type="submit" class="btn btn-dark" [disabled]="userEditForm.invalid">Guardar</button>
         
-        <small *ngIf="!registerForm.valid" class="invalid-feedback d-block mb-2">
+        <small *ngIf="!userEditForm.valid" class="invalid-feedback d-block mb-2">
             Debes completar todos los campos.
         </small>
     </form>
+    <br>
 </div>

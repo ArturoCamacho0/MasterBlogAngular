@@ -1,0 +1,11 @@
+<div class="container text-center" *ngIf="user">
+    <h1 class="mt-4 mb-2">{{ user.name + ' ' + user.surname }}</h1>
+
+    <div *ngIf="user && user.image" class="container mb-3 text-center">
+        <img src="{{ url+'avatar/'+user.image }}" alt="Avatar" class="img-fluid img-rounded"/>
+    </div>
+
+    <div>
+        <h4 class="text-muted">{{ user.email }}</h4>
+    </div>
+</div>
