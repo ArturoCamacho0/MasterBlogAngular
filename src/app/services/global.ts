@@ -1,6 +1,6 @@
 export var global = {
     url: "http://blogmaster.test/api/",
-    htmlEntities: function(str) {
+    htmlEntities: function (str) {
         return String(str).replace('&ntilde;', 'ñ')
             .replace('&Ntilde;', 'Ñ')
             .replace('&amp;', '&')
@@ -69,8 +69,73 @@ export var global = {
             .replace('&yacute;', 'ý')
             .replace('&thorn;', 'þ')
             .replace('&yuml;', 'ÿ')
-            .replace('&nbsp;', '')
-            .replace('nbsp;', '')
-            .replace('&', '');
+            .replace('&nbsp;', ' ')
+            .replace('nbsp;', ' ')
+            .replace('&', ' ');
+    },
+
+    timeDifference: function (current, previous) {
+        let msPerMinute = 60 * 1000;
+        let msPerHour = msPerMinute * 60;
+        let msPerDay = msPerHour * 24;
+        let msPerMonth = msPerDay * 30;
+        let msPerYear = msPerDay * 365;
+
+        var elapsed = current - previous;
+
+        if (elapsed < msPerMinute) {
+            let sec = Math.round(elapsed / 1000);
+            if(sec == 1){
+                return sec + ' segundo';
+            }else{
+                return sec + ' segundos';
+            }
+        }
+
+        else if (elapsed < msPerHour) {
+            let min = Math.round(elapsed / msPerMinute);
+            if(min == 1){
+                return min + ' minuto';
+            }else{
+                return min + ' minutos';
+            }
+        }
+
+        else if (elapsed < msPerDay) {
+            let hour = Math.round(elapsed / msPerHour);
+            if(hour == 1){
+                return hour + ' hora';
+            }else{
+                return hour + ' horas';
+            }
+            
+        }
+
+        else if (elapsed < msPerMonth) {
+            let day = Math.round(elapsed / msPerDay);
+            if(day == 1){
+                return day + ' día';
+            }else{
+                return day + ' días';
+            }
+        }
+
+        else if (elapsed < msPerYear) {
+            let month = Math.round(elapsed / msPerMonth);
+            if(month == 1){
+                return month + ' mes';
+            }else{
+                return month + ' meses';
+            }
+        }
+
+        else {
+            let year = Math.round(elapsed / msPerYear);
+            if(year == 1){
+                return year + ' año';
+            }else{
+                return year + ' años';
+            }
+        }
     }
 }

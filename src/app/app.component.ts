@@ -20,7 +20,7 @@ export class AppComponent implements OnInit, DoCheck {
     ){
       this.loadUser();
       this.url = global.url+'user/';
-      this.user = this._userService.getIdentity()
+      this.user = this._userService.getIdentity();
   }
 
   ngOnInit(){

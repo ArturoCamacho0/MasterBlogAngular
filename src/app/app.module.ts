@@ -16,6 +16,11 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { CategoryCreateComponent } from './components/category-create/category-create.component';
+import { CategoriesComponent } from './components/categories/categories.component';
+import { PostCreateComponent } from './components/post-create/post-create.component';
+import { PostDetailComponent } from './components/post-detail/post-detail.component';
+import { PostEditComponent } from './components/post-edit/post-edit.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +30,12 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
     RegisterComponent,
     LoginComponent,
     UserEditComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    CategoryCreateComponent,
+    CategoriesComponent,
+    PostCreateComponent,
+    PostDetailComponent,
+    PostEditComponent
   ],
   imports: [
     FormsModule,

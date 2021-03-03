@@ -1,21 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { global } from 'src/app/services/global';
 import { UserService } from 'src/app/services/user.service';
 import { PostService } from '../../services/post.service';
+import { Route, ActivatedRoute, Params, Router} from '@angular/router';
+import { CategoryService } from 'src/app/services/category.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
-  providers: [PostService, UserService]
+  selector: 'app-post-detail',
+  templateUrl: './post-detail.component.html',
+  styleUrls: ['./post-detail.component.css'],
+  providers: [PostService, UserService, CategoryService]
 })
-export class HomeComponent implements OnInit {
-  public posts;
+export class PostDetailComponent implements OnInit {
+  public post;
   public status: string;
+  public statusNumber: string;
   public token;
   public identity;
   public url;
+  public numberPostsCategory;
 
   constructor(
     private _postService: PostService,
@@ -25,56 +28,53 @@ export class HomeComponent implements OnInit {
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
     this.url = global.url;
-    this.getPosts();
+
+    this.getPost();
   }
 
   ngOnInit(): void {
   }
 
-  getPosts(){
-    if(this.token != null){
-      this._postService.getAll(this.token).subscribe(
+  getPost(){
+    this._route.params.subscribe(params => {
+      let id = params['id'];
+
+      this._postService.getOne(id, this.token).subscribe(
         response => {
           let res = JSON.parse(JSON.stringify(response));
           if(res.status = 'success'){
+            this.post = res.post;
+            this.getNumberOfPostsCategories(this.post.category_id);
+
             this.status = 'success';
-            
-            this.posts = res.posts;
-            console.log(this.posts);
           }else{
             this.status = 'fail';
           }
-          
         },
         error => {
-          console.log(error);
+          this.status = 'fail';
         }
       );
-    }else{
-      this.status = '404';
-      
-    }
-  }
-
-  getTimeAgo(post_time){
-    return global.timeDifference(new Date().getTime(), new Date(post_time).getTime());
+    });
   }
 
   getTime(post_time){
     return new Date(post_time).getDay() + '/' + new Date().getMonth() + '/' + new Date().getFullYear();
   }
 
-  deletePost(id){
-    this._postService.delete(id, this.token).subscribe(
+  getNumberOfPostsCategories(id_category){
+    this._postService.getPostByCategory(id_category).subscribe(
       response => {
-        this.getPosts();
+        let res = JSON.parse(JSON.stringify(response));
+        if(res.status == 'success'){
+          this.numberPostsCategory = res.posts.length;
+          this.statusNumber = 'successNumber';
+        }
       },
       error => {
         console.log(error);
-        alert('No se ha podido eliminar');
       }
     );
   }
 
 }
-

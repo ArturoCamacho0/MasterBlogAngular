@@ -1,0 +1,22 @@
+<div class="container mt-3 text-center" *ngIf="status == 'success'">
+    <h1 class="display-3">{{ post.title }}</h1>
+
+    <button type="button" class="btn btn-info mb-3">
+        {{ post.category.name }}
+        <span *ngIf="numberPostsCategory > 0 && statusNumber == 'successNumber'"class="badge bg-secondary">
+            {{ numberPostsCategory }}
+        </span>
+    </button>
+
+    <figcaption class="blockquote-footer">
+        <cite title="Source Title">{{ post.user.name + ' ' + post.user.surname }}</cite>
+        &nbsp;
+        <strong>{{ getTime(post.created_at) }}</strong>
+    </figcaption>
+
+    <div class="content">
+        <p class="mt-4 mb-4 lead" [froalaView]="post.content"></p>
+    </div>
+    
+    <img src="{{ url+'post/image/'+post.image }}" class="img-fluid mb-5" alt="Imagen del post">
+</div>

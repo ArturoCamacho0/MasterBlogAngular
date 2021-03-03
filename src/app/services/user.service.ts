@@ -68,8 +68,4 @@ export class UserService{
 
         return this.token;
     }
-
-    getImage(filename){
-        return this._http.get(this.url+'user/avatar/'+filename);
-    }
 }

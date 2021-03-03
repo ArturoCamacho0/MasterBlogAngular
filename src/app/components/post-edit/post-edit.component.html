@@ -1,0 +1,75 @@
+<div class="container">
+    <h1 class="text-center">Edicion del post</h1>
+
+    <div class="text-center" *ngIf="status != 'ok' && status != 'success' && status != 'fail'">
+        <div class="spinner-border text-dark" role="status">
+            <span class="visually-hidden"></span>
+        </div>
+    </div>
+
+    <form #createForm="ngForm" (ngSubmit)="onSubmit(createForm)">
+        <div class="form-group">
+            <label for="title">Titulo del post</label>
+            <input type="text" class="form-control" name="title"
+                placeholder="Introduce el titulo de tu post"
+                #title="ngModel" [(ngModel)]="post.title" required
+                [ngClass]="{ 'is-invalid' : title.invalid && title.touched,
+                'is-valid' : title.valid && title.touched }">
+            <small *ngIf="!title.valid && title.touched" class="invalid-feedback d-block">
+                El titulo no es valido.
+            </small>
+        </div>
+
+        <div class="mb-3">
+            <label for="content" class="form-label">Contenido del post</label>
+
+            <textarea [froalaEditor] #content="ngModel" required [(ngModel)]="post.content"
+            [froalaEditor]='options' required
+            [ngClass]="{ 'is-invalid' : content.invalid && content.touched || content == '',
+            'is-valid' : content.valid && content.touched }" name="content">
+                {{ post.content }}
+            </textarea>
+
+            <small *ngIf="!content.valid && content.touched" class="invalid-feedback d-block">
+                El contenido no es valido.
+            </small>
+        </div>
+
+        <div class="mb-3 text-center">
+            <label for="formFile" class="form-label">Im&aacute;gen para el post</label>
+            <angular-file-uploader
+                [config]="afuConfig"
+                [resetUpload]=resetVar
+                (ApiResponse)="avatarUpload($event)">
+            </angular-file-uploader>
+        </div>
+
+        <div *ngIf="post && post.image" class="container mb-3 text-center">
+            <img src="{{ url+'post/image/' + post.image }}" alt="Imagen del post" class="img-fluid img-rounded"/>
+        </div>
+
+
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="user_id">Categoria del post</label>
+            <select class="form-select category-select" name="user_id" #category_id="ngModel" [(ngModel)]="post.category_id">
+                <option selected>Selecciona una categoria...</option>
+                <option *ngFor="let category of categories" value="{{ category.id }}">{{ category.name }}</option>
+            </select>
+        </div>
+
+        <div *ngIf="status == 'success'" class="alert alert-success" role="alert">
+            El post se ha guardado correctamente.
+            <a [routerLink]="['/inicio']" class="alert-link">Ve a verlo!</a>
+        </div>
+
+        <div *ngIf="status == 'fail'" class="alert alert-danger" role="alert">
+            No se ha podido editar el post.
+        </div>
+
+        <button type="submit" class="btn btn-dark mb-4" [disabled]="createForm.invalid">Guardar</button>
+        
+        <small *ngIf="!createForm.valid" class="invalid-feedback d-block mb-2">
+            Debes completar todos los campos.
+        </small>
+    </form>
+</div>

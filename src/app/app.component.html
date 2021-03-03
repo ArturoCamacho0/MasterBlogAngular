@@ -1,6 +1,5 @@
-<div class="container"> <!-- Contenedor principal -->
-  <br>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark"> <!-- Barra de navegacion -->
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top"> <!-- Barra de navegacion -->
     <a class="navbar-brand" href="#">
       <img src="../assets/images/blog.svg" width="30" height="30" class="d-inline-block align-top" alt="">
       Blog NG
@@ -15,7 +14,7 @@
           <a class="nav-link" [routerLink]="['/inicio']">Inicio<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Categorias</a>
+          <a class="nav-link" [routerLink]="['/categorias']">Categorias</a>
         </li>
       </ul>
 
@@ -37,8 +36,8 @@
             {{ identity.name + ' ' + identity.surname}} 
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Crear entrada</a>
-            <a class="dropdown-item" href="#">Crear categoria</a>
+            <a class="dropdown-item" [routerLink]="['/post/crear']">Crear entrada</a>
+            <a class="dropdown-item" [routerLink]="['/categoria/crear']">Crear categoria</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" [routerLink]="['/perfil']">Mi perfil</a>
             <a class="dropdown-item" [routerLink]="['/perfil/editar']">Editar perfil</a>
@@ -49,6 +48,5 @@
       </ul>
     </div>
   </nav>
-</div>
 
 <router-outlet></router-outlet>

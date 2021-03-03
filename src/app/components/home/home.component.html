@@ -1,1 +1,90 @@
-<p>home works!</p>
+<div class="container mt-3">
+    <h1 class="text-center mb-3 display-3">Posts publicados</h1>
+
+    <hr>
+
+    <div class="text-center" *ngIf="status != 'success' && status != '404'">
+        <div class="spinner-border text-dark" role="status">
+            <span class="visually-hidden"></span>
+        </div>
+    </div>
+
+    <div *ngIf="status == '404'" class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>
+            <h2>No estas identificado :(</h2>
+        </strong>
+        <a [routerLink]="['/login']" class="alert-link">Inicia sesión</a> o
+        <a [routerLink]="['/registro']" class="alert-link">Registrate</a>
+        para ver todo el cotenido de los posts
+    </div>
+
+    <div class="card mb-3" *ngFor="let post of posts">
+        <div class="image-container">
+            <img src="{{ url+'post/image/'+post.image }}" class="card-img-top image-post" alt="Imagen del post">
+        </div>
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="card-title d-flex align-items-center">
+                    {{ post.title }}&nbsp;
+                    <span class="badge rounded-pill bg-info text-white">{{ post.category.name }}</span>
+                </h4>
+
+                <div class="d-flex justify-content-end" *ngIf="post.user.id == identity.id">
+
+                    <a [routerLink]="['/post/editar/', post.id]" class="btn btn-outline-info mr-3">
+                        Editar
+                    </a>
+
+
+                    <!-- Trigger the modal with a button -->
+                    <button type="button" class="btn btn-outline-danger" data-toggle="modal"
+                        [attr.data-target]="'#post_modal'+post.id">
+                        Eliminar
+                    </button>
+
+                    <!-- Modal -->
+                    <div id="{{'post_modal'+post.id}}" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Estas seguro?</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Vas a eliminar el post <strong>{{ post.title }}</strong></p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                    <button (click)="deletePost(post.id)" type="button"
+                                        class="btn btn-danger" data-dismiss="modal">Eliminar</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="card-text"><small class="text-muted">
+                    Últimos cambios hace {{ getTimeAgo(post.updated_at) }}
+                </small></p>
+
+            <footer class="blockquote-footer">Publicado por
+                <cite title="Source Title">
+                    <strong>{{ post.user.name + ' ' + post.user.surname }}</strong>
+                </cite>
+            </footer>
+
+            <div class="d-flex flex-column mt-3 justify-content-center">
+                <a [routerLink]="['/post/', post.id]" class="btn btn-outline-secondary mt-3">
+                    Leer el post
+                </a>
+            </div>
+        </div>
+        <div class="card-footer text-muted text-center">
+            Fecha de publicación: {{ getTime(post.created_at) }}
+        </div>
+    </div>
+</div>

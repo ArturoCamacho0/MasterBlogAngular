@@ -1,0 +1,32 @@
+<div class="container text-center">
+    <h1 class="mt-3 mb-3">Crea una nueva categoria</h1>
+
+    <form #createForm="ngForm" (ngSubmit)="onSubmit(createForm)">
+        <div class="form-group">
+            <label for="name">Nombre de la categoria</label>
+            <input type="text" class="form-control" name="name"
+                placeholder="Introduce el nombre de la nueva categoria"
+                #name="ngModel" [(ngModel)]="category.name" required
+                [ngClass]="{ 'is-invalid' : name.invalid && name.touched,
+                'is-valid' : name.valid && name.touched }">
+            <small *ngIf="!name.valid && name.touched" class="invalid-feedback d-block">
+                El nombre no es valido.
+            </small>
+        </div>
+
+        <div *ngIf="status == 'success'" class="alert alert-success" role="alert">
+            El usuario se ha creado correctamente,
+            <a [routerLink]="['/']" class="alert-link">Mira las categorias!</a>
+        </div>
+
+        <div *ngIf="status == 'fail'" class="alert alert-danger" role="alert">
+            No se ha podido crear la categoria.
+        </div>
+
+        <button type="submit" class="btn btn-dark" [disabled]="createForm.invalid">Crear</button>
+        
+        <small *ngIf="!createForm.valid" class="invalid-feedback d-block mb-2">
+            Debes completar todos los campos.
+        </small>
+    </form>
+</div>

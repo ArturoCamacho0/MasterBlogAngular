@@ -51,15 +51,31 @@ export class LoginComponent implements OnInit {
             error => {
               console.log(error);
               this.status = 'fail';
+              form.reset();
+
+              setTimeout(() => {
+                this.status = '';
+              }, 4000);
+              
             }
           );
         }else{
-          this.status = 'fail'
+          this.status = 'fail';
+          form.reset();
+
+          setTimeout(() => {
+            this.status = '';
+          }, 4000);
         }
       },
       error => {
         console.log(error);
         this.status = 'fail';
+        form.reset();
+
+        setTimeout(() => {
+          this.status = '';
+        }, 4000);
       }
     );
   }
