@@ -1,0 +1,10 @@
+.image-post{
+    width: 100%;
+    height: auto;
+    background-position:initial !important;
+}
+
+.image-container{
+    height: 50vh;
+    overflow: hidden;
+}

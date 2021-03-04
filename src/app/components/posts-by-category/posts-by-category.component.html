@@ -1,9 +1,16 @@
-<div class="container mt-3">
-    <h1 class="text-center mb-3 display-3">Posts publicados</h1>
+<div class="container mt-3" *ngIf="status == 'no'">
+    <div class="alert alert-danger" role="alert">
+        <h2>Ocurrio un error al cargar los posts.</h2>
+        Tal vez no hay posts en esta categoria.
+    </div>
+</div>
+
+<div class="container mt-3" *ngIf="status == 'ok'">
+    <h1 class="text-center mb-3 display-3">{{ title }}</h1>
 
     <hr>
 
-    <div class="text-center" *ngIf="status != 'success' && status != '404'">
+    <div class="text-center" *ngIf="status != 'ok'">
         <div class="spinner-border text-dark" role="status">
             <span class="visually-hidden"></span>
         </div>
@@ -17,10 +24,10 @@
         <a [routerLink]="['/registro']" class="alert-link">Registrate</a>
         para ver todo el cotenido de los posts
     </div>
-</div>
 
-<div class="container">
     <div class="card mb-3" *ngFor="let post of posts">
+        
+
         <div class="image-container">
             <img src="{{ url+'post/image/'+post.image }}" class="card-img-top image-post" alt="Imagen del post">
         </div>

@@ -21,6 +21,7 @@ import { CategoriesComponent } from './components/categories/categories.componen
 import { PostCreateComponent } from './components/post-create/post-create.component';
 import { PostDetailComponent } from './components/post-detail/post-detail.component';
 import { PostEditComponent } from './components/post-edit/post-edit.component';
+import { PostsByCategoryComponent } from './components/posts-by-category/posts-by-category.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { PostEditComponent } from './components/post-edit/post-edit.component';
     CategoriesComponent,
     PostCreateComponent,
     PostDetailComponent,
-    PostEditComponent
+    PostEditComponent,
+    PostsByCategoryComponent
   ],
   imports: [
     FormsModule,

@@ -15,6 +15,7 @@ import { CategoriesComponent } from './components/categories/categories.componen
 import { PostCreateComponent } from './components/post-create/post-create.component';
 import { PostDetailComponent } from './components/post-detail/post-detail.component';
 import { PostEditComponent } from './components/post-edit/post-edit.component';
+import { PostsByCategoryComponent } from './components/posts-by-category/posts-by-category.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -24,11 +25,12 @@ const appRoutes: Routes = [
     { path: 'logout/:sure', canActivate: [LogoutGuard], component: LoginComponent },
     { path: 'perfil', canActivate: [LoggedGuard], component: UserProfileComponent },
     { path: 'perfil/editar', canActivate: [LoggedGuard], component: UserEditComponent },
-    { path: 'categorias', component: CategoriesComponent },
+    { path: 'categorias', canActivate: [LoggedGuard], component: CategoriesComponent },
     { path: 'categoria/crear', canActivate: [LoggedGuard], component: CategoryCreateComponent },
     { path: 'post/crear', canActivate: [LoggedGuard], component: PostCreateComponent },
-    { path: 'post/:id', component: PostDetailComponent},
+    { path: 'post/:id', canActivate: [LoggedGuard], component: PostDetailComponent},
     { path: 'post/editar/:id', canActivate: [LoggedGuard], component: PostEditComponent },
+    { path: 'posts/category/:id', canActivate: [LoggedGuard], component: PostsByCategoryComponent },
     { path: '**', component: NotFoundComponent }
 ];
 

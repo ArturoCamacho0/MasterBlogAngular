@@ -43,6 +43,10 @@ export class PostService {
         return this._http.get(this.url + 'post/category/' + category_id);
     }
 
+    getPostByUser(user_id): Observable<any>{
+        return this._http.get(this.url + 'post/user/' + user_id);
+    }
+
     update(token, post, id): Observable<any>{
         let json = JSON.stringify(post);
         let params = 'json=' + json;

@@ -8,4 +8,15 @@
     <div>
         <h4 class="text-muted">{{ user.email }}</h4>
     </div>
+
+    <hr>
+
+    <ul class="list-group mb-4" *ngIf="posts">
+        <h1 class="display-3 mb-3">Tus posts</h1>
+        <a [routerLink]="['/post/', post.id]" *ngFor="let post of posts"
+        class="list-group-item list-group-item-action list-group-item-dark d-flex">
+            <strong>{{ post.title }}</strong>&nbsp;
+            <span>Publicado el {{ getTime(post.created_at) }}</span>
+        </a>
+    </ul>
 </div>
